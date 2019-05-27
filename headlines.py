@@ -11,7 +11,6 @@ from flask import Flask
 from flask import render_template
 from flask import request
 import json
-import urllib2
 import urllib
 
 app = Flask(__name__)
@@ -37,11 +36,11 @@ def get_news():
     weather = get_weather("Philadelphia,US")
     return render_template("home.html",articles=feed['entries'], weather = weather)
 
-def get_weather():
+def get_weather(query):
     api_url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid=04b64c4599b0c05101d8c22b14bb2379"
     query = urllib.quote(query)
     url = api_url.format(query)
-    data = urllib2.urlopen(url).read()
+    data = urllib.request.urlopen(url).read()
     parsed = json.loads(data)
     weather = None
     if parsed.get("weather"):
