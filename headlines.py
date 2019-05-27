@@ -22,19 +22,30 @@ RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/fe
                  'emergencies':'https://afro.who.int/rss/emergencies.xml',
                  'death':'http://rawdataserver.com/CDB/rss'
                  }
-
+DEFAULTS = {'publication':'anxiety',
+            'city': 'Philadelphia,US'}
 
 
 @app.route("/")
-def get_news():
+def home():
+    publication = request.args.get('publication')
+    if not publication:
+        publication = DEFAULTS['publication']
+    articles = get_news(publication)
+    city = request.args.get('city')
+    if not city:
+        city = DEFAULTS['city']
+    weather = get_weather(city)
+    return render_template("home.html", articles=articles,weather=weather)
+
+def get_news(query):
     query = request.args.get("publication")
     if not query or query.lower() not in RSS_FEEDS:
         publication = "anxiety"
     else:
         publication = query.lower()
     feed = feedparser.parse(RSS_FEEDS[publication])
-    weather = get_weather("Philadelphia,US")
-    return render_template("home.html",articles=feed['entries'], weather = weather)
+    return feed['entries']
 
 def get_weather(query):
     api_url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid=04b64c4599b0c05101d8c22b14bb2379"

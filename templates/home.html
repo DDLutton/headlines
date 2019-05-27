@@ -11,12 +11,16 @@ Created on Mon May 27 10:42:00 2019
         <title> &#60 3 </title>
     </head>
     <form>
-      <input type="text" name="publication" placeholder="search" />
+      <input type="text" name="publication" placeholder="There's nothing to find here." />
       <input type="submit" value="Submit" />
     </form>
     <body>
         <h1>Isn't it beautiful? We made it ourselves.</h1>
         <h2>A hard rain is gonna fall</h2>
+        <form>
+            <input type="text" name="city" placeholder="Do you really think it's better over there?">
+            <input type="submit" value="Submit">
+        </form>
         <p>City: <b>{{weather.city}}</b></p>
         <p>{{weather.description}} |{{weather.temperature}} Kelvin</p>
         <h2>Fears</h2>
