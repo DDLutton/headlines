@@ -21,13 +21,12 @@ Created on Mon May 27 10:42:00 2019
             <input type="text" name="city" placeholder="so it don't matter where you go.">
             <input type="submit" value="Submit">
         </form>
-        {% if weather.city is "Philadelphia" %}
+        {% if weather.city == 'Philadelphia' %}
             <p>
             Home: <b>Philly</b></p>
-        {% endif %}
         {% else %}
             <p>
-            How the hell did I end up here? <b>weather.city, {{weather.country}}</b></p>
+            How the hell did I end up here? <b>{{ weather.city }}, {{weather.country}}</b></p>
         {% endif %}
         <p>{{weather.description}} |{{weather.temperature}} Kelvin</p>
         <h2>Fears</h2>
