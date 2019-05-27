@@ -21,33 +21,11 @@ RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/fe
                  'death':'http://rawdataserver.com/CDB/rss'
                  }
 
-@app.route("/")
-@app.route("/anxiety")
-def anxiety():
-    return get_news('anxiety')
-@app.route("/mood")
-def mood():
-    return get_news('mood')
-@app.route("/depression")
-def depression():
-    return get_news('depression')
-@app.route("/dwarves")
-def dwarves():
-    return get_news('dwarves')
-@app.route("/obitOne")
-def obitOne():
-    return get_news('obitOne')
-@app.route("/obitTwo")
-def obitTwo():
-    return get_news('obitTwo')
-@app.route("/leprosy")
-def leprosy():
-    return get_news('leprosy')
-@app.route("/death")
-def death():
-    return get_news('death')
 
-def get_news(publication):
+
+@app.route("/")
+@app.route("</publication>")
+def get_news(publication="anxiety"):
     feed = feedparser.parse(RSS_FEEDS[publication])
     first_article = feed['entries'][0]
     return """<html>
