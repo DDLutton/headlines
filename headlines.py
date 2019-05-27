@@ -9,6 +9,7 @@ Created on Wed May 22 20:28:56 2019
 import feedparser
 from flask import Flask
 from flask import render_template
+from flask import request
 
 app = Flask(__name__)
 RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/feed',
@@ -23,8 +24,12 @@ RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/fe
 
 
 @app.route("/")
-@app.route("/<publication>")
-def get_news(publication="anxiety"):
+def get_news():
+    query = request.args.get("publication")
+    if not query or query.lower() not in RSS_FEEDS:
+        publication = "anxiety"
+    else:
+        publication = query.lower()
     feed = feedparser.parse(RSS_FEEDS[publication])
     return render_template("home.html",articles=feed['entries'])
 
