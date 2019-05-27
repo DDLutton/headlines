@@ -10,6 +10,9 @@ import feedparser
 from flask import Flask
 from flask import render_template
 from flask import request
+import json
+import urllib2
+import urllib
 
 app = Flask(__name__)
 RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/feed',
@@ -31,7 +34,20 @@ def get_news():
     else:
         publication = query.lower()
     feed = feedparser.parse(RSS_FEEDS[publication])
-    return render_template("home.html",articles=feed['entries'])
+    weather = get_weather("Philadelphia,US")
+    return render_template("home.html",articles=feed['entries'], weather = weather)
+
+def get_weather():
+    api_url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid=04b64c4599b0c05101d8c22b14bb2379"
+    query = urllib.quote(query)
+    url = api_url.format(query)
+    data = urllib2.urlopen(url).read()
+    parsed = json.loads(data)
+    weather = None
+    if parsed.get("weather"):
+        weather = {"description":parsed["weather"][0]["description"],"temperature":parsed["main"]["temp"],"city":parsed["name"]
+                  }
+    return weather
 
 if __name__ == '__main__':
   app.run(port=5000, debug=True)
