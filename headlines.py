@@ -23,9 +23,9 @@ RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/fe
 
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def get_news():
-    query = request.args.get("publication")
+    query = request.form.get("publication")
     if not query or query.lower() not in RSS_FEEDS:
         publication = "anxiety"
     else:
@@ -41,8 +41,8 @@ if __name__ == '__main__':
   
   
   
-  
-  
+
+
   
   
   
