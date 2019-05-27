@@ -23,11 +23,11 @@ RSS_FEEDS = {'anxiety':'https://www.psychiatryadvisor.com/home/topics/anxiety/fe
 
 
 @app.route("/")
-@app.route("</publication>")
+@app.route("/<publication>")
 def get_news(publication="anxiety"):
     feed = feedparser.parse(RSS_FEEDS[publication])
     first_article = feed['entries'][0]
-    return render_template("/home.html",title=first_article.get("title"),published=first_article.get("published"),summary=first_article.get("summary"))
+    return render_template("home.html",title=first_article.get("title"),published=first_article.get("published"),summary=first_article.get("summary"))
 
 if __name__ == '__main__':
   app.run(port=5000, debug=True)
