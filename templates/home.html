@@ -11,17 +11,24 @@ Created on Mon May 27 10:42:00 2019
         <title> &#60 3 </title>
     </head>
     <form>
-      <input type="text" name="publication" placeholder="There's nothing to find here." />
+      <input type="text" name="publication" placeholder="There's nothing to find here," />
       <input type="submit" value="Submit" />
     </form>
     <body>
         <h1>Isn't it beautiful? We made it ourselves.</h1>
         <h2>A hard rain is gonna fall</h2>
         <form>
-            <input type="text" name="city" placeholder="Do you really think it's better over there?">
+            <input type="text" name="city" placeholder="so it don't matter where you go.">
             <input type="submit" value="Submit">
         </form>
-        <p>City: <b>{{weather.city}}</b></p>
+        {% if weather.city is "Philadelphia" %}
+            <p>
+            Home: <b>Philly</b></p>
+        {% endif %}
+        {% else %}
+            <p>
+            How the hell did I end up here? <b>weather.city, {{weather.country}}</b></p>
+        {% endif %}
         <p>{{weather.description}} |{{weather.temperature}} Kelvin</p>
         <h2>Fears</h2>
         {% for article in articles %}
